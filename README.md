@@ -4,7 +4,7 @@ En el repositorio que han accedido podrán observar un **Servicio Cognitivo de A
 **1. Servicio Cognitivo:**
 <img src ="https://www.tec-innova.mx/wp-content/uploads/2021/05/Microsoft-Azure-Para-Empresas.jpg" align="right" style="width: 200px"/>
 - Herramienta de Azure: Content Moderator
-- Evaluación de Texto: Ofensivo o No Ofensivo
+- Evaluación de Texto: Ofensivo e Inofensivo
 
 **2. Java EE:**
 <img src ="https://i0.wp.com/windtux.com/wp-content/uploads/2017/08/javaee-logo.png?ssl=1" align="right" style="width: 200px"/>
