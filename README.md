@@ -6,16 +6,18 @@ En el repositorio que han accedido podrán observar un **Servicio Cognitivo de A
 - Herramienta de Azure: Content Moderator
 - Evaluación de Texto: Ofensivo e Inofensivo
 
-**2. Java EE:**
-<img src ="https://i0.wp.com/windtux.com/wp-content/uploads/2017/08/javaee-logo.png?ssl=1" align="right" style="width: 200px"/>
+**2. Spring Boot:**
+<img src ="https://miro.medium.com/v2/resize:fit:716/1*98O4Gb5HLSlmdUkKg1DP1Q.png" align="right" style="width: 200px"/>
 - Java: JDK 17
-- Java EE: Java EE 8 Web
 - IDE: Spring Tool Suite 4 IDE 4.19.1
 - Maven: Apache Maven 3.9.1
 
 **3. Dependencias Maven:**
 <img src ="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Apache_Maven_logo.svg/1280px-Apache_Maven_logo.svg.png" align="right" style="width: 200px"/>
-* lombok: 1.18.20
-* okhttp3: 4.9.3
-* r2dbc: 1.0.2.RELEASE
-* json: 20160810
+* spring-boot-starter-webflux
+* spring-boot-starter-data-r2dbc
+* lombok
+* reactor-test
+* r2dbc-postgresql
+* okhttp3
+* json
