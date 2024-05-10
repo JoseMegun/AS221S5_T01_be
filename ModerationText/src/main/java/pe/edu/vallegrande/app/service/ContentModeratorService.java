@@ -43,22 +43,69 @@ public class ContentModeratorService {
                 .method("POST", body)
                 .addHeader("Host", "eastus.api.cognitive.microsoft.com")
                 .addHeader("Content-Type", "text/plain")
-                .addHeader("Ocp-Apim-Subscription-Key", "4a8ac4c3ddea41eab72e59289566934d")
+                .addHeader("Ocp-Apim-Subscription-Key", "80662798c6d1435699eace8404e593d1")
                 .build();
-        Response response = client.newCall(request).execute();
+        
+        try {
+            Response response = client.newCall(request).execute();
+            JSONObject jsonObject = new JSONObject(response.body().string());
 
-        JSONObject jsonObject = new JSONObject(response.body().string());
-        //moderationResult.setId(1);
-        moderationResult.setOriginalText(jsonObject.getString("OriginalText"));
-        moderationResult.setNormalizedText(jsonObject.getString("NormalizedText"));
-        moderationResultRepository.save(moderationResult);
+            moderationResult.setOriginalText(jsonObject.getString("OriginalText"));
+            moderationResult.setNormalizedText(jsonObject.getString("NormalizedText"));
 
-        log.info("Mostrando JSON " + jsonObject);
-        log.info("Mostrando ORIGINAL TEXT " + moderationResult.getOriginalText());
-        log.info("Mostrando NORMALIZED TEXT " + moderationResult.getNormalizedText());
-        log.info("Mostrando MODELO " + moderationResult.toString());
+            log.info("Mostrando JSON " + jsonObject);
+            log.info("Mostrando ORIGINAL TEXT " + moderationResult.getOriginalText());
+            log.info("Mostrando NORMALIZED TEXT " + moderationResult.getNormalizedText());
+            log.info("Mostrando MODELO " + moderationResult.toString());
 
-        return moderationResultRepository.save(moderationResult);
+            return moderationResultRepository.save(moderationResult);
+        } catch (Exception e) {
+            log.error("Error al procesar el texto moderado: " + e.getMessage());
+            return Mono.error(e);
+        }
+    }
+    
+    public Mono<ModerationResult> update(Integer id, ModerationResult moderationResult) {
+        return moderationResultRepository.findById(id)
+                .flatMap(existingResult -> {
+                    // Actualiza el texto original con el valor proporcionado
+                    existingResult.setOriginalText(moderationResult.getOriginalText());
+                    
+                    // Establece los valores de normalizedText y consultText mediante el servicio de moderación
+                    return updateModerationText(existingResult);
+                })
+                .onErrorResume(e -> {
+                    log.error("Error al actualizar el texto moderado: " + e.getMessage());
+                    return Mono.error(e);
+                });
+    }
+
+    private Mono<ModerationResult> updateModerationText(ModerationResult moderationResult) {
+        try {
+            // Normaliza el texto eliminando la censura
+            String normalizedText = moderationResult.getOriginalText().replaceAll("fucking", "");
+            
+            // Establece normalizedText sin censura y consultText con el texto original
+            moderationResult.setNormalizedText(normalizedText.trim());
+            moderationResult.setConsultText(moderationResult.getOriginalText());
+            
+            return moderationResultRepository.save(moderationResult);
+        } catch (Exception e) {
+            log.error("Error al actualizar el texto moderado: " + e.getMessage());
+            return Mono.error(e);
+        }
+    }
+
+    public Mono<Void> delete(Integer id) {
+        return moderationResultRepository.findById(id)
+                .flatMap(existingResult -> {
+                    existingResult.setStatus('I'); // Marcado como inactivo
+                    return moderationResultRepository.save(existingResult).then();
+                });
+    }
+    
+    public Flux<ModerationResult> findByActiveTrue() {
+        return moderationResultRepository.findByActiveTrue();
     }
 
 }

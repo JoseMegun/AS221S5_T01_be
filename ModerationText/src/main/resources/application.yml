@@ -6,6 +6,6 @@ spring:
     name: T01_ServicioAPI
     
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/moderatorText
+    url: r2dbc:postgresql://postgres.ndiaodusqzgvfipzqgtg:moderatortext2024123@aws-0-us-west-1.pooler.supabase.com:5432/postgres
     username: postgres
-    password: jmegun23 
+    password: moderatortext2024123

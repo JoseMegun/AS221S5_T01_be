@@ -22,4 +22,7 @@ public class ModerationResult {
     @Column(value = "ConsultText")
     private String consultText;
     
+    @Column(value = "Status")
+    private char status = 'A';
+    
 }

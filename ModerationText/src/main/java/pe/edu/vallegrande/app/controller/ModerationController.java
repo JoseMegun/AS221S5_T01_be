@@ -24,7 +24,18 @@ public class ModerationController {
     }
     
     @PostMapping("/save")
-    public Mono<ModerationResult> save(ModerationResult moderationResult) throws Exception {
+    public Mono<ModerationResult> save(@RequestBody ModerationResult moderationResult) throws Exception {
         return contentModeratorService.save(moderationResult);
     }
+
+    @PutMapping("/update/{id}")
+    public Mono<ModerationResult> update(@PathVariable Integer id, @RequestBody ModerationResult moderationResult) {
+        return contentModeratorService.update(id, moderationResult);
+    }
+    
+    @DeleteMapping("/delete/{id}")
+    public Mono<Void> delete(@PathVariable Integer id) {
+        return contentModeratorService.delete(id);
+    }
+
 }

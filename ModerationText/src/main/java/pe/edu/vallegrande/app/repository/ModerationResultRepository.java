@@ -10,7 +10,7 @@ import pe.edu.vallegrande.app.entity.ModerationResult;
 @Repository
 public interface ModerationResultRepository extends ReactiveCrudRepository<ModerationResult, Integer> {
 
-    @Query("SELECT * FROM moderacion")
-    Flux<ModerationResult> findAll();
+	@Query("SELECT * FROM moderacion WHERE status = 'A'")
+    Flux<ModerationResult> findByActiveTrue();
 
 }
