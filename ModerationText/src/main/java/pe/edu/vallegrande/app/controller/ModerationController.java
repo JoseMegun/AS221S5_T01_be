@@ -22,20 +22,30 @@ public class ModerationController {
     public Flux<ModerationResult> getAll() {
         return contentModeratorService.getAll();
     }
-    
+
     @PostMapping("/save")
     public Mono<ModerationResult> save(@RequestBody ModerationResult moderationResult) throws Exception {
         return contentModeratorService.save(moderationResult);
+    }
+
+    @PostMapping("/crear")
+    public Mono<ModerationResult> crear(@RequestBody ModerationResult moderationResult) throws Exception {
+        return contentModeratorService.crear(moderationResult);
     }
 
     @PutMapping("/update/{id}")
     public Mono<ModerationResult> update(@PathVariable Integer id, @RequestBody ModerationResult moderationResult) {
         return contentModeratorService.update(id, moderationResult);
     }
-    
+
     @DeleteMapping("/delete/{id}")
     public Mono<Void> delete(@PathVariable Integer id) {
         return contentModeratorService.delete(id);
+    }
+
+    @GetMapping("/hello")
+    public Mono<String> helloWorld() {
+        return Mono.just("Hello, World!");
     }
 
 }

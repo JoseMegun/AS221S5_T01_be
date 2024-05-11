@@ -19,10 +19,16 @@ import org.json.JSONObject;
 public class ContentModeratorService {
 
 	private final ModerationResultRepository moderationResultRepository;
-	
+
+
 	@Autowired
+
     public ContentModeratorService(ModerationResultRepository moderationResultRepository) {
         this.moderationResultRepository = moderationResultRepository;
+    }
+
+    public Mono<ModerationResult> crear(ModerationResult moderationResult) {
+        return moderationResultRepository.save(moderationResult);
     }
 
     public Flux<ModerationResult> getAll() {
