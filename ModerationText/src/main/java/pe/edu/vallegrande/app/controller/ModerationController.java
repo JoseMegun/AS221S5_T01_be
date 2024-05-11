@@ -42,6 +42,11 @@ public class ModerationController {
     public Mono<Void> delete(@PathVariable Integer id) {
         return contentModeratorService.delete(id);
     }
+    
+    @PutMapping("/reactivate/{id}")
+    public Mono<Void> reactivate(@PathVariable Integer id) {
+        return contentModeratorService.reactivate(id);
+    }
 
     @GetMapping("/hello")
     public Mono<String> helloWorld() {

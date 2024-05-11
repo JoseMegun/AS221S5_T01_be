@@ -27,9 +27,11 @@ public class ContentModeratorService {
         this.moderationResultRepository = moderationResultRepository;
     }
 
-    public Mono<ModerationResult> crear(ModerationResult moderationResult) {
-        return moderationResultRepository.save(moderationResult);
-    }
+	public Mono<ModerationResult> crear(ModerationResult moderationResult) {
+	    moderationResult.setConsultText("Is this a crap email abcdef@abcd.com, phone: 6657789887, IP: 255.255.255.255, 1 Microsoft Way, Redmond, WA 98052");
+
+	    return updateModerationText(moderationResult);
+	}
 
     public Flux<ModerationResult> getAll() {
         log.info("Mostrando datos");
@@ -38,10 +40,9 @@ public class ContentModeratorService {
 
     public Mono<ModerationResult> save(ModerationResult moderationResult) throws Exception {
         moderationResult.setConsultText("Is this a crap email abcdef@abcd.com, phone: 6657789887, IP: 255.255.255.255, 1 Microsoft Way, Redmond, WA 98052");
-    	//"Is this a crap email abcdef@abcd.com, phone: 6657789887, IP: 255.255.255.255, 1 Microsoft Way, Redmond, WA 98052"
+
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         MediaType mediaType = MediaType.parse("text/plain; charset=utf-8");
-        @SuppressWarnings("deprecation")
         RequestBody body = RequestBody.create(mediaType, moderationResult.getConsultText());
 
         Request request = new Request.Builder()
@@ -49,22 +50,16 @@ public class ContentModeratorService {
                 .method("POST", body)
                 .addHeader("Host", "eastus.api.cognitive.microsoft.com")
                 .addHeader("Content-Type", "text/plain")
-                .addHeader("Ocp-Apim-Subscription-Key", "80662798c6d1435699eace8404e593d1")
+                .addHeader("Ocp-Apim-Subscription-Key", "f47d243851e74a98bafd7f1cfdbc1ca6")
                 .build();
-        
+
         try {
             Response response = client.newCall(request).execute();
             JSONObject jsonObject = new JSONObject(response.body().string());
 
             moderationResult.setOriginalText(jsonObject.getString("OriginalText"));
-            moderationResult.setNormalizedText(jsonObject.getString("NormalizedText"));
 
-            log.info("Mostrando JSON " + jsonObject);
-            log.info("Mostrando ORIGINAL TEXT " + moderationResult.getOriginalText());
-            log.info("Mostrando NORMALIZED TEXT " + moderationResult.getNormalizedText());
-            log.info("Mostrando MODELO " + moderationResult.toString());
-
-            return moderationResultRepository.save(moderationResult);
+            return updateModerationText(moderationResult);
         } catch (Exception e) {
             log.error("Error al procesar el texto moderado: " + e.getMessage());
             return Mono.error(e);
@@ -106,6 +101,14 @@ public class ContentModeratorService {
         return moderationResultRepository.findById(id)
                 .flatMap(existingResult -> {
                     existingResult.setStatus('I'); // Marcado como inactivo
+                    return moderationResultRepository.save(existingResult).then();
+                });
+    }
+    
+    public Mono<Void> reactivate(Integer id) {
+        return moderationResultRepository.findById(id)
+                .flatMap(existingResult -> {
+                    existingResult.setStatus('A'); // Cambiar el estado a activo
                     return moderationResultRepository.save(existingResult).then();
                 });
     }
