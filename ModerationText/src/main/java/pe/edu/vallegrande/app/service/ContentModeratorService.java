@@ -50,7 +50,7 @@ public class ContentModeratorService {
                 .method("POST", body)
                 .addHeader("Host", "eastus.api.cognitive.microsoft.com")
                 .addHeader("Content-Type", "text/plain")
-                .addHeader("Ocp-Apim-Subscription-Key", "f47d243851e74a98bafd7f1cfdbc1ca6")
+                .addHeader("Ocp-Apim-Subscription-Key", "c99a2eed86824caa91af9408c2bf979f")
                 .build();
 
         try {
