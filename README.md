@@ -17,6 +17,7 @@ En el repositorio que han accedido podrán observar un **Servicio Cognitivo de A
 - Java EE: Java EE 8 Web
 - IDE: Spring Tool Suite 4 IDE 4.19.1
 - Maven: Apache Maven 3.9.1
+  
 
 **3. Dependencias Maven:**
 <img src ="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Apache_Maven_logo.svg/1280px-Apache_Maven_logo.svg.png" align="right" style="width: 200px"/>
