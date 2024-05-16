@@ -1,6 +1,11 @@
 # AS221S5_T01_be - Servicio Cognitivo con IA de Azure - Content Moderator con Spring Boot
 En el repositorio que han accedido podrán observar un **Servicio Cognitivo de Azure**, implementado la función de evaluar las palabras de texto que se consideren **ofensivo** e **inofensivo**, es decir, si el servicio detecta alguna mala palabra o grosería, generando la API desde Azure Sandbox para consumirlo en Java.
 
+**Integrantes del TEAM 01:**
+- Fabio Alonso Martel Antonio
+- José Megun Cama La Madrid
+- Evelyn Laleska Palomino Cuzcano
+
 **1. Servicio Cognitivo:**
 <img src ="https://www.tec-innova.mx/wp-content/uploads/2021/05/Microsoft-Azure-Para-Empresas.jpg" align="right" style="width: 200px"/>
 - Herramienta de Azure: Content Moderator
