@@ -5,7 +5,7 @@ FROM openjdk:17
 WORKDIR /app
 
 # Copia el archivo JAR de tu aplicación al contenedor
-COPY target/*.jar app.jar
+COPY target/ModerationText-0.0.1-SNAPSHOT.jar app.jar
 
 # Exponer el puerto 8086 en el contenedor
 EXPOSE 8086

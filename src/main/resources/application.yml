@@ -3,7 +3,7 @@ server:
 
 spring:
   application: 
-    name: T01_ServicioAPI
+    name: ModerationText
     
   r2dbc:
     url: r2dbc:postgresql://postgres.ndiaodusqzgvfipzqgtg:moderatortext2024123@aws-0-us-west-1.pooler.supabase.com:5432/postgres

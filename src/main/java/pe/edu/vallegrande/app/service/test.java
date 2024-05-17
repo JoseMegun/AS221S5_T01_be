@@ -28,7 +28,7 @@ public class test {
                 .method("POST", body)
                 .addHeader("Host", "eastus.api.cognitive.microsoft.com")
                 .addHeader("Content-Type", "text/plain")
-                .addHeader("Ocp-Apim-Subscription-Key", "c99a2eed86824caa91af9408c2bf979f")
+                .addHeader("Ocp-Apim-Subscription-Key", "8f913e4d4ed941e4ad170e822f62c95b")
                 .build();
         Response response = client.newCall(request).execute();
 
