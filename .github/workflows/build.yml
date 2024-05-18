@@ -32,10 +32,8 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: List root directory contents
         run: ls -al
-      - name: List src directory contents
-        run: ls -al src
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -f ./pom.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=JoseMegun_AS221S5_T01_be
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=JoseMegun_AS221S5_T01_be
