@@ -14,11 +14,11 @@
 	<name>ModerationText</name>
 	<description>Gestion de Servicio Cognitivo de API de Moderacion de Textos</description>
 	<properties>
-		<sonar.organization>josemegun</sonar.organization>
-  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<java.version>17</java.version>
 		<maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        	<maven.compiler.target>17</maven.compiler.target>
+		<sonar.organization>josemegun</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
