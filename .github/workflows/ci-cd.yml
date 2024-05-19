@@ -2,9 +2,7 @@ name: SonarCloud
 on:
   push:
     branches:
-      - main
-  pull_request:
-    types: [opened, synchronize, reopened]
+      - servicioAPI_SpringBoot
 jobs:
   build:
     name: Build and analyze
