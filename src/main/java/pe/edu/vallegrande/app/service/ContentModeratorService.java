@@ -14,24 +14,26 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Slf4j
 @Service
 public class ContentModeratorService {
 
-	private final ModerationResultRepository moderationResultRepository;
+    private final ModerationResultRepository moderationResultRepository;
 
+    private static final List<String> FORBIDDEN_WORDS = Arrays.asList("fucking", "shit", "damn", "crap", "bitch", "hell", "bullshit", "kill", "suck my dick", "fuck", "mierda", "carajo", "demonios");
 
-	@Autowired
-
+    @Autowired
     public ContentModeratorService(ModerationResultRepository moderationResultRepository) {
         this.moderationResultRepository = moderationResultRepository;
     }
 
-	public Mono<ModerationResult> crear(ModerationResult moderationResult) {
-	    moderationResult.setConsultText("Is this a crap email abcdef@abcd.com, phone: 6657789887, IP: 255.255.255.255, 1 Microsoft Way, Redmond, WA 98052");
-
-	    return updateModerationText(moderationResult);
-	}
+    public Mono<ModerationResult> crear(ModerationResult moderationResult) {
+        moderationResult.setConsultText("Is this a crap email abcdef@abcd.com, phone: 6657789887, IP: 255.255.255.255, 1 Microsoft Way, Redmond, WA 98052");
+        return updateModerationText(moderationResult);
+    }
 
     public Flux<ModerationResult> getAll() {
         log.info("Mostrando datos");
@@ -65,7 +67,7 @@ public class ContentModeratorService {
             return Mono.error(e);
         }
     }
-    
+
     public Mono<ModerationResult> update(Integer id, ModerationResult moderationResult) {
         return moderationResultRepository.findById(id)
                 .flatMap(existingResult -> {
@@ -84,12 +86,16 @@ public class ContentModeratorService {
     private Mono<ModerationResult> updateModerationText(ModerationResult moderationResult) {
         try {
             // Normaliza el texto eliminando la censura
-            String normalizedText = moderationResult.getOriginalText().replaceAll("fucking", "");
-            
+            String normalizedText = moderationResult.getOriginalText();
+            for (String word : FORBIDDEN_WORDS) {
+                normalizedText = normalizedText.replaceAll("(?i)" + word, ""); // (?i) hace la búsqueda case-insensitive
+            }
+
             // Establece normalizedText sin censura y consultText con el texto original
             moderationResult.setNormalizedText(normalizedText.trim());
             moderationResult.setConsultText(moderationResult.getOriginalText());
-            
+            moderationResult.setStatus("A");
+
             return moderationResultRepository.save(moderationResult);
         } catch (Exception e) {
             log.error("Error al actualizar el texto moderado: " + e.getMessage());
@@ -100,21 +106,20 @@ public class ContentModeratorService {
     public Mono<Void> delete(Integer id) {
         return moderationResultRepository.findById(id)
                 .flatMap(existingResult -> {
-                    existingResult.setStatus('I'); // Marcado como inactivo
+                    existingResult.setStatus("I"); // Marcado como inactivo
                     return moderationResultRepository.save(existingResult).then();
                 });
     }
-    
+
     public Mono<Void> reactivate(Integer id) {
         return moderationResultRepository.findById(id)
                 .flatMap(existingResult -> {
-                    existingResult.setStatus('A'); // Cambiar el estado a activo
+                    existingResult.setStatus("A"); // Cambiar el estado a activo
                     return moderationResultRepository.save(existingResult).then();
                 });
     }
-    
+
     public Flux<ModerationResult> findByActiveTrue() {
         return moderationResultRepository.findByActiveTrue();
     }
-
 }

@@ -7,6 +7,7 @@ import pe.edu.vallegrande.app.service.ContentModeratorService;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Flux;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/moderation")
 public class ModerationController {

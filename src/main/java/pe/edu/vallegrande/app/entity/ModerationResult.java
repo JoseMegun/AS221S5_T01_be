@@ -23,6 +23,6 @@ public class ModerationResult {
     private String consultText;
     
     @Column(value = "Status")
-    private char status = 'A';
+    private String status;
     
 }
