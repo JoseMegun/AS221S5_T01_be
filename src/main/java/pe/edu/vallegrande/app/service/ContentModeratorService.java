@@ -122,4 +122,12 @@ public class ContentModeratorService {
     public Flux<ModerationResult> findByActiveTrue() {
         return moderationResultRepository.findByActiveTrue();
     }
+    
+    public Flux<ModerationResult> findByInactiveTrue() {
+        return moderationResultRepository.findByInactiveTrue();
+    }
+    
+    public Mono<ModerationResult> getById(Integer id) {
+        return moderationResultRepository.findById(id);
+    }
 }

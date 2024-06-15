@@ -53,5 +53,19 @@ public class ModerationController {
     public Mono<String> helloWorld() {
         return Mono.just("Hello, World!");
     }
+    
+    @GetMapping("/{id}")
+    public Mono<ModerationResult> getById(@PathVariable Integer id) {
+        return contentModeratorService.getById(id);
+    }
+    
+    @GetMapping("/active")
+    public Flux<ModerationResult> getActive() {
+        return contentModeratorService.findByActiveTrue();
+    }
 
+    @GetMapping("/inactive")
+    public Flux<ModerationResult> getInactive() {
+        return contentModeratorService.findByInactiveTrue();
+    }
 }

@@ -12,5 +12,8 @@ public interface ModerationResultRepository extends ReactiveCrudRepository<Moder
 
 	@Query("SELECT * FROM moderacion WHERE status = 'A'")
     Flux<ModerationResult> findByActiveTrue();
+	
+	@Query("SELECT * FROM moderacion WHERE status = 'I'")
+    Flux<ModerationResult> findByInactiveTrue();
 
 }
